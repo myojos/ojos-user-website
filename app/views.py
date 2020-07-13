@@ -3,7 +3,8 @@ from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views import generic
 
-from .models import Event, User
+from home.models import User
+from .models import Event
 
 
 def index(request):
@@ -16,7 +17,7 @@ class ProfileUpdate(generic.edit.UpdateView):
     template_name = 'app/profile.html'
 
     def get_object(self, **kwargs):
-        return User.objects.get(pk=1)
+        return self.request.user
 
     def get_success_url(self):
         return reverse_lazy('app:profile')
@@ -27,10 +28,12 @@ class EventsView(generic.ListView):
     template_name = 'app/events.html'
     context_object_name = 'user_events'
     paginate_by = 10
-    queryset = Event.objects.filter(user=1).order_by('-timestamp')
+
+    def get_queryset(self):
+        return Event.objects.filter(user=self.request.user).order_by('-timestamp')
 
 
-def events(request, page=1):
+def events(request):
     user_events = Event.objects
     context = {'user_events': user_events}
     return render(request, 'app/events.html', context)
