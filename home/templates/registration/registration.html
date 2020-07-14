@@ -6,15 +6,15 @@
 
 {% block body_content %}
     <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
-        <div class="container"><a class="navbar-brand logo" href="#"><i class="far fa-eye" style="font-size: 22px;"></i>JOS</a>
+        <div class="container"><a class="navbar-brand logo" href="{% url 'home:index' %}"><i class="far fa-eye" style="font-size: 22px;"></i>JOS</a>
             <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span
                     class="navbar-toggler-icon"></span></button>
             <div
                     class="collapse navbar-collapse" id="navcol-1">
                 <ul class="nav navbar-nav ml-auto">
                     <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'home:index' %}">Home</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="../home/contact-us.html">Contact Us</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="login.html">Login</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'home:contact' %}">Contact Us</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'home:login' %}">Login</a></li>
                 </ul>
             </div>
         </div>
@@ -30,24 +30,23 @@
                     {% csrf_token %}
                     {% load widget_tweaks %}
                     {{ form.non_field_errors }}
-                    {{ form.first_name.errors }}
                     <div class="form-group"><label for="name">First Name</label>
                         {% render_field form.first_name class+="form-control" %}
 {#                        <input class="form-control item" type="text" id="name"></div>#}
-                    {{ form.last_name.errors }}
+                    {{ form.first_name.errors }}
                     <div class="form-group"><label for="name">First Name</label>
                         {% render_field form.last_name class+="form-control" %}
 {#                        <input class="form-control item" type="text" id="name"></div>#}
-                    {{ form.email.errors }}
+                    {{ form.last_name.errors }}
                     <div class="form-group"><label for="email">Email</label>
                         {% render_field form.email class+="form-control" %}
 {#                        <input class="form-control item" type="email" id="email"></div>#}
-                    {{ form.password1.errors }}
+                    {{ form.email.errors }}
                     <div class="form-group"><label for="password">Password</label>
                         {% render_field form.password1 class+="form-control" %}
 {#                        <input class="form-control item" type="password" id="password">#}
                     </div>
-                    {{ form.password2.errors }}
+                    {{ form.password1.errors }}
                     <div class="form-group"><label for="password">Password confirmation</label>
                         {% render_field form.password2 class+="form-control" %}
 {#                        <input class="form-control item" type="password" id="password">#}

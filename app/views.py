@@ -1,5 +1,6 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views import generic
 
@@ -7,11 +8,12 @@ from home.models import User
 from .models import Event
 
 
+@login_required
 def index(request):
     return HttpResponseRedirect(reverse('app:profile'))
 
 
-class ProfileUpdate(generic.edit.UpdateView):
+class ProfileUpdate(LoginRequiredMixin, generic.edit.UpdateView):
     model = User
     fields = ['first_name', 'last_name', 'email', 'phone']
     template_name = 'app/profile.html'
@@ -23,7 +25,7 @@ class ProfileUpdate(generic.edit.UpdateView):
         return reverse_lazy('app:profile')
 
 
-class EventsView(generic.ListView):
+class EventsView(LoginRequiredMixin, generic.ListView):
     model = Event
     template_name = 'app/events.html'
     context_object_name = 'user_events'
@@ -31,9 +33,3 @@ class EventsView(generic.ListView):
 
     def get_queryset(self):
         return Event.objects.filter(user=self.request.user).order_by('-timestamp')
-
-
-def events(request):
-    user_events = Event.objects
-    context = {'user_events': user_events}
-    return render(request, 'app/events.html', context)

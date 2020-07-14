@@ -6,14 +6,14 @@
 
 {% block body_content %}
     <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
-        <div class="container"><a class="navbar-brand logo" href="#"><i class="far fa-eye" style="font-size: 22px;"></i>JOS</a>
+        <div class="container"><a class="navbar-brand logo" href="{% url 'home:index' %}"><i class="far fa-eye" style="font-size: 22px;"></i>JOS</a>
             <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span
                     class="navbar-toggler-icon"></span></button>
             <div
                     class="collapse navbar-collapse" id="navcol-1">
                 <ul class="nav navbar-nav ml-auto">
                     <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'home:index' %}">Home</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'home:index' %}">Contact Us</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'home:contact' %}">Contact Us</a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link active" href="{% url 'home:login' %}">Login</a></li>
                 </ul>
             </div>

@@ -20,7 +20,7 @@
                     <li class="nav-item" role="presentation"><a class="nav-link active" href="{% url 'app:events' %}"><i
                             class="fas fa-list-ul"></i><span>Events History</span></a>
                     </li>
-                    <li role="presentation" class="nav-item"><a class="nav-link" href="configurations.html"><i
+                    <li role="presentation" class="nav-item"><a class="nav-link" href="{% url 'home:logout' %}"><i
                             class="fas fa-door-open"></i><span>Log out</span></a>
                     </li>
                 </ul>
@@ -63,7 +63,7 @@
                                 <table class="table dataTable my-0" id="dataTable">
                                     <thead>
                                     <tr>
-                                        <th>Event type</th>
+                                        <th>Event</th>
                                         <th>Where</th>
                                         <th>When</th>
                                         <th class="text-center">Video</th>
@@ -81,7 +81,7 @@
                                     </tbody>
                                     <tfoot>
                                     <tr>
-                                        <td><strong>Name</strong></td>
+                                        <td><strong>Event</strong></td>
                                         <td><strong>Where</strong></td>
                                         <td><strong>When</strong></td>
                                         <td class="text-center"><strong>Video</strong></td>

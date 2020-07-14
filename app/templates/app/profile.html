@@ -18,7 +18,7 @@
                             class="fas fa-user"></i><span>Profile</span></a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'app:events' %}"><i
                             class="fas fa-list-ul"></i><span>Events History</span></a></li>
-                    <li role="presentation" class="nav-item"><a class="nav-link" href="configurations.html"><i
+                    <li role="presentation" class="nav-item"><a class="nav-link" href="{% url 'home:logout' %}"><i
                             class="fas fa-door-open"></i><span>Log out</span></a></li>
                 </ul>
                 <div class="text-center d-none d-md-inline">
@@ -42,26 +42,26 @@
                                         {{ form.non_field_errors }}
                                         <div class="form-row">
                                             <div class="col">
-                                                {{ form.first_name.errors }}
                                                 <div class="form-group"><label for="first_name"><strong>First Name</strong></label>
                                                     {% render_field form.first_name class+="form-control" %}
                                                 </div>
+                                                {{ form.first_name.errors }}
                                             </div>
                                             <div class="col">
-                                                {{ form.last_name.errors }}
                                                 <div class="form-group"><label for="last_name"><strong>Last Name</strong></label>
                                                     {% render_field form.last_name class+="form-control" %}
                                                 </div>
+                                                {{ form.last_name.errors }}
                                             </div>
                                         </div>
-                                        {{ form.email.errors }}
                                         <div class="form-group"><label for="city"><strong>Email</strong></label>
                                             {% render_field form.email class+="form-control" %}
                                         </div>
-                                        {{ form.phone.errors }}
+                                        {{ form.email.errors }}
                                         <div class="form-group"><label for="country"><strong>Phone</strong></label>
                                             {% render_field form.phone class+="form-control" %}
                                         </div>
+                                        {{ form.phone.errors }}
                                         <div class="form-group">
                                             <button class="btn btn-primary btn-sm" type="submit">Save</button>
                                         </div>
