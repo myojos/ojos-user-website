@@ -10,5 +10,6 @@ urlpatterns = [
     path('contact/', views.contact, name='contact'),
     path('accounts/login/', auth_views.LoginView.as_view(redirect_authenticated_user=True), name='login'),
     path('accounts/register/', views.RegisterView.as_view(), name='register'),
+    path('accounts/activate/<uidb64>/<token>/', views.activate, name='activate'),
     path('accounts/', include('django.contrib.auth.urls')),
 ]

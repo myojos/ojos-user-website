@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.views import generic
 
-from home.models import User
+from home.models import OjosUser
 from .models import Event
 
 
@@ -14,8 +14,8 @@ def index(request):
 
 
 class ProfileUpdate(LoginRequiredMixin, generic.edit.UpdateView):
-    model = User
-    fields = ['first_name', 'last_name', 'email', 'phone']
+    model = OjosUser
+    fields = ['first_name', 'last_name']
     template_name = 'app/profile.html'
 
     def get_object(self, **kwargs):

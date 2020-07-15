@@ -1,0 +1,8 @@
+{% autoescape off %}Hello {{ user.get_short_name }},
+
+To confirm your registration, please click on this link:
+http://{{ domain }}{% url 'home:activate' uidb64=uid token=token %}
+If you think this email was not meant for you, please ignore it.
+
+Thank you!
+OJOS{% endautoescape %}

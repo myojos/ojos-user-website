@@ -7,28 +7,7 @@
 
 {% block body_content %}
     <div id="wrapper">
-        <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
-            <div class="container-fluid d-flex flex-column p-0">
-                <a class="navbar-brand logo" href="/"
-                   style="font-family: Montserrat, sans-serif;font-size: 24px;padding-top: 24px;padding-bottom: 24px;padding-right: 16px;padding-left: 16px;">
-                    <i class="far fa-eye" style="font-size: 23px;"></i>JOS</a>
-                <hr class="sidebar-divider my-0">
-                <ul class="nav navbar-nav text-light" id="accordionSidebar">
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'app:profile' %}"><i
-                            class="fas fa-user"></i><span>Profile</span></a>
-                    </li>
-                    <li class="nav-item" role="presentation"><a class="nav-link active" href="{% url 'app:events' %}"><i
-                            class="fas fa-list-ul"></i><span>Events History</span></a>
-                    </li>
-                    <li role="presentation" class="nav-item"><a class="nav-link" href="{% url 'home:logout' %}"><i
-                            class="fas fa-door-open"></i><span>Log out</span></a>
-                    </li>
-                </ul>
-                <div class="text-center d-none d-md-inline">
-                    <button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button>
-                </div>
-            </div>
-        </nav>
+        {% include 'app/navbar.html' %}
         <div class="d-flex flex-column" id="content-wrapper">
             <div id="content">
                 <div class="container-fluid">

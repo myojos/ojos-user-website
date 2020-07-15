@@ -2,23 +2,12 @@
 
 {% block head_content %}
     <title>Register - OJOS</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'flags/sprite.css' %}">
 {% endblock %}
 
 {% block body_content %}
-    <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
-        <div class="container"><a class="navbar-brand logo" href="{% url 'home:index' %}"><i class="far fa-eye" style="font-size: 22px;"></i>JOS</a>
-            <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span
-                    class="navbar-toggler-icon"></span></button>
-            <div
-                    class="collapse navbar-collapse" id="navcol-1">
-                <ul class="nav navbar-nav ml-auto">
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'home:index' %}">Home</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'home:contact' %}">Contact Us</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'home:login' %}">Login</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    {% include 'home/navbar.html' %}
     <main class="page registration-page">
         <section class="clean-block clean-form dark">
             <div class="container">
@@ -32,24 +21,45 @@
                     {{ form.non_field_errors }}
                     <div class="form-group"><label for="name">First Name</label>
                         {% render_field form.first_name class+="form-control" %}
-{#                        <input class="form-control item" type="text" id="name"></div>#}
-                    {{ form.first_name.errors }}
+                        {% if form.first_name.errors %}
+                            <div class="isa_error">{{ form.first_name.errors }}</div>
+                        {% endif %}
+                    </div>
                     <div class="form-group"><label for="name">First Name</label>
                         {% render_field form.last_name class+="form-control" %}
-{#                        <input class="form-control item" type="text" id="name"></div>#}
-                    {{ form.last_name.errors }}
+                        {% if form.last_name.errors %}
+                            <div class="isa_error">{{ form.last_name.errors }}</div>
+                        {% endif %}
+                    </div>
                     <div class="form-group"><label for="email">Email</label>
                         {% render_field form.email class+="form-control" %}
-{#                        <input class="form-control item" type="email" id="email"></div>#}
-                    {{ form.email.errors }}
-                    <div class="form-group"><label for="password">Password</label>
-                        {% render_field form.password1 class+="form-control" %}
-{#                        <input class="form-control item" type="password" id="password">#}
+                        {% if form.email.errors %}
+                            <div class="isa_error">{{ form.email.errors }}</div>
+                        {% endif %}
                     </div>
-                    {{ form.password1.errors }}
-                    <div class="form-group"><label for="password">Password confirmation</label>
+                    <div class="form-group"><label for="country" style="width: 100%;">Country</label>
+                        {% render_field form.country class+="form-control" style="width: 75%; display: inline-block;" %}
+                        {% if form.country.errors %}
+                            <div class="isa_error">{{ form.country.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="form-group"><label for="phone_number">Phone number</label>
+                        {% render_field form.phone_number class+="form-control" %}
+                        {% if form.phone_number.errors %}
+                            <div class="isa_error">{{ form.phone_number.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="form-group"><label for="password1">Password</label>
+                        {% render_field form.password1 class+="form-control" %}
+                        {% if form.password1.errors %}
+                            <div class="isa_error">{{ form.password1.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="form-group"><label for="password2">Password confirmation</label>
                         {% render_field form.password2 class+="form-control" %}
-{#                        <input class="form-control item" type="password" id="password">#}
+                        {% if form.password2.errors %}
+                            <div class="isa_error">{{ form.password2.errors }}</div>
+                        {% endif %}
                     </div>
                     <button class="btn btn-primary btn-block" type="submit">Sign Up</button>
                 </form>

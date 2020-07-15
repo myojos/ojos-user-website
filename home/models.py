@@ -1,5 +1,7 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
+from django.utils import timezone
+from django_countries.fields import CountryField
 from phonenumber_field.modelfields import PhoneNumberField
 
 
@@ -26,12 +28,14 @@ class UserManager(BaseUserManager):
         return user
 
 
-class User(AbstractBaseUser):
+class OjosUser(AbstractBaseUser):
     username = None
     email = models.EmailField(max_length=255, unique=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    phone = PhoneNumberField(blank=True)
+    country = CountryField()
+    phone_number = PhoneNumberField(blank=False)
+    date_joined = models.DateTimeField(default=timezone.now)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 

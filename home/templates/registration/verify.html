@@ -1,0 +1,19 @@
+{% extends "home/base.html" %}
+
+{% block head_content %}
+    <title>Verification required - OJOS</title>
+{% endblock %}
+
+{% block body_content %}
+    {% include 'home/navbar.html' %}
+    <main class="page login-page">
+        <section class="clean-block clean-form dark">
+            <div class="container">
+                <div class="block-heading">
+                    <h2 class="text-info">Please verify your email</h2>
+                    <p>We have just sent you a verification email. Once you receive it, click the attached link to verify your account. The link is valid for 48 hours.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+{% endblock %}
