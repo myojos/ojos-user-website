@@ -1,0 +1,19 @@
+{% extends "home/base.html" %}
+
+{% block head_content %}
+    <title>Contact form submitted - OJOS</title>
+{% endblock %}
+
+{% block body_content %}
+    {% include 'home/navbar.html' %}
+    <main class="page login-page">
+        <section class="clean-block clean-form dark">
+            <div class="container">
+                <div class="block-heading">
+                    <h2 class="text-info">Thank you!</h2>
+                    <p>Your request have been sent successfully, and our team will contact you soon.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+{% endblock %}

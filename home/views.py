@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
@@ -21,22 +20,21 @@ def index(request):
     return render(request, 'home/index.html')
 
 
-def contact(request):
-    return render(request, 'home/contact-us.html')
-
-
 def activate(request, uidb64, token):
     try:
         uid = urlsafe_base64_decode(uidb64).decode()
         user = UserModel._default_manager.get(pk=uid)
     except(TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
-    if user is not None and default_token_generator.check_token(user, token):
+    if user is None:
+        return HttpResponse('Activation link is invalid!')
+    elif default_token_generator.check_token(user, token):
         user.is_active = True
         user.save()
-        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+        return render(request, 'registration/acc_active_complete.html')
     else:
-        return HttpResponse('Activation link is invalid!')
+        user.delete()
+        return HttpResponse('Activation link expired, please sign up again.')
 
 
 class RegisterView(SuccessMessageMixin, CreateView):
@@ -60,12 +58,13 @@ class RegisterView(SuccessMessageMixin, CreateView):
             mail_subject = 'Activate your account.'
             message = render_to_string('registration/acc_active_email.html', {
                 'user': user,
+                'protocol': request.scheme,
                 'domain': current_site.domain,
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                 'token': default_token_generator.make_token(user),
             })
             to_email = form.cleaned_data.get('email')
-            email = EmailMessage(mail_subject, message, from_email=f"'OJOS <{settings.EMAIL_HOST_USER}>'", to=[to_email])
+            email = EmailMessage(mail_subject, message, to=[to_email])
             email.send()
             return render(request, 'registration/verify.html')
 

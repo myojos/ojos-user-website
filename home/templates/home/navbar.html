@@ -11,8 +11,8 @@
                 class="collapse navbar-collapse" id="navcol-1">
             <ul class="nav navbar-nav ml-auto">
                 <li class="nav-item" role="presentation"><a class="nav-link {% if request.path == home_url %} active {% endif %}" href="{% url 'home:index' %}">Home</a></li>
-                <li class="nav-item" role="presentation"><a class="nav-link {% if request.path == contact_url %} active {% endif %}" href="{% url 'home:contact' %}">Contact Us</a></li>
-                <li class="nav-item" role="presentation"><a class="nav-link {% if request.path == login_url %} active {% endif %}" href="{% url 'home:login' %}">Login</a></li>
+                <li class="nav-item" role="presentation"><a class="nav-link {% if request.path == contact_url %} active {% endif %}" href="{% url 'home:contact_form' %}">Contact Us</a></li>
+                <li class="nav-item" role="presentation"><a class="nav-link {% if request.path == login_url %} active {% endif %}" href="{% url 'home:login' %}">Dashboard</a></li>
             </ul>
         </div>
     </div>
