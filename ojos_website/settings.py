@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'widget_tweaks',
     'contact_form',
+    'bootstrap_modal_forms',
     'home.apps.HomeConfig',
     'app.apps.AppConfig',
     'django.contrib.admin',

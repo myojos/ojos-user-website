@@ -6,110 +6,146 @@
 {% endblock %}
 
 {% block body_content %}
-    <div id="wrapper">
-        {% include 'app/navbar.html' %}
-        <div class="d-flex flex-column" id="content-wrapper">
-            <div id="content">
-                <div class="container-fluid">
-                    <div class="d-sm-flex justify-content-between align-items-center mb-4" style="margin-top: 1.5rem;">
-                        <h3 class="text-dark mb-4" style="margin-top: 1.5rem;">Events History</h3><a
-                            class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="#"><i
-                            class="fas fa-download fa-sm text-white-50"></i>&nbsp;Generate Report</a></div>
-                    <div class="card shadow">
-                        <div class="card-header py-3">
-                            <p class="text-primary m-0 font-weight-bold">All logs</p>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6 text-nowrap">
-                                    <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"><label>Show&nbsp;<select
-                                            class="form-control form-control-sm custom-select custom-select-sm">
-                                        <option value="10" selected="">10</option>
-                                        <option value="25">25</option>
-                                        <option value="50">50</option>
-                                        <option value="100">100</option>
-                                    </select>&nbsp;</label></div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="text-md-right dataTables_filter" id="dataTable_filter"><label><input type="search"
-                                                                                                                     class="form-control form-control-sm"
-                                                                                                                     aria-controls="dataTable"
-                                                                                                                     placeholder="Search"></label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
-                                <table class="table dataTable my-0" id="dataTable">
-                                    <thead>
-                                    <tr>
-                                        <th>Event</th>
-                                        <th>Where</th>
-                                        <th>When</th>
-                                        <th class="text-center">Video</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {% for event in user_events %}
-                                        <tr>
-                                            <td>{{ event.event_type }}</td>
-                                            <td>{{ event.location }}</td>
-                                            <td>{{ event.timestamp }}</td>
-                                            <td class="text-center"><i class="fas fa-film"></i></td>
-                                        </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                    <tfoot>
-                                    <tr>
-                                        <td><strong>Event</strong></td>
-                                        <td><strong>Where</strong></td>
-                                        <td><strong>When</strong></td>
-                                        <td class="text-center"><strong>Video</strong></td>
-                                    </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                            {% if is_paginated %}
-                                <div class="row">
-                                    <div class="col-md-6 align-self-auto">
-                                        <nav class="d-lg-flex justify-content-lg-start dataTables_paginate paging_simple_numbers">
-                                            <ul class="pagination">
-                                                {% if page_obj.has_previous %}
-                                                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}"
-                                                                             aria-label="Previous"><span aria-hidden="true">«</span></a></li>
-                                                {% else %}
-                                                    <li class="page-item disabled"><a class="page-link" aria-label="Previous"><span
-                                                            aria-hidden="true">«</span></a></li>
-                                                {% endif %}
-                                                {% for i in paginator.page_range %}
-                                                    {% if page_obj.number == i %}
-                                                        <li class="page-item active"><a class="page-link">{{ i }}</a></li>
-                                                    {% else %}
-                                                        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
-                                                    {% endif %}
-                                                {% endfor %}
-                                                {% if page_obj.has_next %}
-                                                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}"
-                                                                             aria-label="Next"><span aria-hidden="true">»</span></a></li>
-                                                {% else %}
-                                                    <li class="page-item disabled"><a class="page-link" aria-label="Next"><span
-                                                            aria-hidden="true">»</span></a>
-                                                    </li>
-                                                {% endif %}
-                                            </ul>
-                                        </nav>
-                                    </div>
-                                </div>
-                            {% endif %}
-                        </div>
+    <div class="d-sm-flex justify-content-between align-items-center mb-4" style="margin-top: 1.5rem;">
+        <h3 class="text-dark mb-4" style="margin-top: 1.5rem;">Events History</h3><a
+            class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="#"><i
+            class="fas fa-download fa-sm text-white-50"></i>&nbsp;Generate Report</a></div>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="card shadow">
+        <div class="card-header py-3">
+            <p class="text-primary m-0 font-weight-bold">All logs</p>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6 text-nowrap">
+                    <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"><label>Show&nbsp;<select
+                            class="form-control form-control-sm custom-select custom-select-sm">
+                        <option value="10" selected="">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>&nbsp;</label></div>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-md-right dataTables_filter" id="dataTable_filter"><label><input type="search"
+                                                                                                     class="form-control form-control-sm"
+                                                                                                     aria-controls="dataTable"
+                                                                                                     placeholder="Search"></label>
                     </div>
                 </div>
             </div>
-            <footer class="bg-white sticky-footer">
-                <div class="container my-auto">
-                    <div class="text-center my-auto copyright"><span>Copyright © OJOS 2020</span></div>
+            <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                <table class="table dataTable my-0" id="dataTable">
+                    <thead>
+                    <tr>
+                        <th>Event</th>
+                        <th>Where</th>
+                        <th>When</th>
+                        <th class="text-center">Video</th>
+                        <th class="text-center">Download</th>
+                        <th class="text-center">Report Error</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for event in user_events %}
+                        <tr {% if event.is_reported %}class="table-warning"{% endif %}>
+                            <td>{{ event.event_type }}</td>
+                            <td>{{ event.location }}</td>
+                            <td>{{ event.timestamp }}</td>
+                            <td class="text-center">
+                                {% if not event.is_old %}
+                                    <a href="{{ event.video_link }}"><i class="fas fa-film active"></i></a>
+                                {% else %}
+                                    <i class="fas fa-film"></i>
+                                {% endif %}
+                            </td>
+                            <td class="text-center">
+                                {% if not event.is_old %}
+                                    <a href="{{ event.video_link }}" download><i class="fas fa-download active"></i></a>
+                                {% else %}
+                                    <i class="fas fa-download"></i>
+                                {% endif %}
+                            </td>
+                            <td class="text-center">
+                                {% if not event.is_old and not event.is_reported %}
+                                    <button class="btn btn-danger report_event" id="report_event" type="button"
+                                            data-form-url="{% url 'app:report_event' event.pk %}">Report
+                                    </button>
+                                {% elif event.is_reported %}
+                                    <i class="fas fa-exclamation-circle text-danger"
+                                       data-toggle="tooltip" data-placement="top" title="This event has been reported"></i>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td>Event</td>
+                        <td>Where</td>
+                        <td>When</td>
+                        <th class="text-center">Video</th>
+                        <th class="text-center">Download</th>
+                        <th class="text-center">Report Error</th>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+            {% if is_paginated %}
+                <div class="row">
+                    <div class="col-md-6 align-self-auto">
+                        <nav class="d-lg-flex justify-content-lg-start dataTables_paginate paging_simple_numbers">
+                            <ul class="pagination">
+                                {% if page_obj.has_previous %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}"
+                                                             aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+                                {% else %}
+                                    <li class="page-item disabled"><a class="page-link" aria-label="Previous"><span
+                                            aria-hidden="true">«</span></a></li>
+                                {% endif %}
+                                {% for i in paginator.page_range %}
+                                    {% if page_obj.number == i %}
+                                        <li class="page-item active"><a class="page-link">{{ i }}</a></li>
+                                    {% else %}
+                                        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if page_obj.has_next %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}"
+                                                             aria-label="Next"><span aria-hidden="true">»</span></a></li>
+                                {% else %}
+                                    <li class="page-item disabled"><a class="page-link" aria-label="Next"><span
+                                            aria-hidden="true">»</span></a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
-            </footer>
+            {% endif %}
         </div>
-        <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>
+{% endblock %}
+
+{% block extra_scripts %}
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+
+        $(".report_event").each(function () {
+            $(this).modalForm({
+                formURL: $(this).data('form-url')
+            });
+        });
+    </script>
 {% endblock %}

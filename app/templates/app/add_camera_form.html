@@ -1,0 +1,51 @@
+{% load widget_tweaks %}
+
+<form method="post" action="">
+    {% csrf_token %}
+
+    <div class="modal-header">
+        <h4 class="modal-title text-primary">Add camera</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+
+    <div class="modal-body">
+        <h5><strong>App settings</strong></h5>
+        <div class="form-group"><label>App:</label>
+            {% render_field form.app class+="form-control" %}
+            {% if form.app.errors %}
+                <div class="isa_error {% if form.app.errors %} invalid {% endif %}">{{ form.app.errors }}</div>
+            {% endif %}
+        </div>
+        <div class="form-group"><label>App Username:</label>
+            {% render_field form.auth_key class+="form-control" %}
+            {% if form.auth_key.errors %}
+                <div class="isa_error {% if form.auth_key.errors %} invalid {% endif %}">{{ form.auth_key.errors }}</div>
+            {% endif %}</div>
+        <div class="form-group"><label>App Password:</label>
+            {% render_field form.auth_pass class+="form-control" %}
+            {% if form.auth_pass.errors %}
+                <div class="isa_error {% if form.auth_pass.errors %} invalid {% endif %}">{{ form.auth_pass.errors }}</div>
+            {% endif %}</div>
+        <hr/>
+        <h5><strong>Camera settings</strong></h5>
+        <div class="form-group"><label>Camera Location:</label>
+            {% render_field form.location class+="form-control" %}
+            {% if form.location.errors %}
+                <div class="isa_error {% if form.location.errors %} invalid {% endif %}">{{ form.location.errors }}</div>
+            {% endif %}</div>
+        <div class="form-group"><label>Extra information</label>
+            <div class="form-check">
+                {% render_field form.exit_door %}
+                {{ form.exit_door.label }}
+                {% if form.exit_door.errors %}
+                    <div class="isa_error {% if form.exit_door.errors %} invalid {% endif %}">{{ form.exit_door.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-light" type="button" data-dismiss="modal">Close</button>
+        <button class="submit-btn btn btn-primary" type="button">Save</button>
+    </div>
+</form>

@@ -6,59 +6,120 @@
 {% endblock %}
 
 {% block body_content %}
-    <div id="wrapper">
-        {% include 'app/navbar.html' %}
-        <div class="d-flex flex-column" id="content-wrapper">
-            <div id="content">
-                <div class="container-fluid">
-                    <h3 class="text-dark mb-4" style="margin-top: 1.5rem;">Profile</h3>
-                    <div class="row mb-3">
-                        <div class="col">
-                            <div class="card shadow mb-3">
-                                <div class="card-header py-3">
-                                    <p class="text-primary m-0 font-weight-bold">User Settings</p>
-                                </div>
-                                <div class="card-body">
-                                    {% load widget_tweaks %}
-                                    <form method="post">{% csrf_token %}
-                                        {{ form.non_field_errors }}
-                                        <div class="form-row">
-                                            <div class="col">
-                                                <div class="form-group"><label for="first_name"><strong>First Name</strong></label>
-                                                    {% render_field form.first_name class+="form-control" %}
-                                                </div>
-                                                {{ form.first_name.errors }}
-                                            </div>
-                                            <div class="col">
-                                                <div class="form-group"><label for="last_name"><strong>Last Name</strong></label>
-                                                    {% render_field form.last_name class+="form-control" %}
-                                                </div>
-                                                {{ form.last_name.errors }}
-                                            </div>
-                                        </div>
-{#                                        <div class="form-group"><label for="email"><strong>Email</strong></label>#}
-{#                                            {% render_field form.email class+="form-control" %}#}
-{#                                            {{ form.email.errors }}#}
-{#                                        </div>#}
-{#                                        <div class="form-group"><label for="phone_number"><strong>Phone</strong></label>#}
-{#                                            {% render_field form.phone_number class+="form-control" %}#}
-{#                                            {{ form.phone_number.errors }}#}
-{#                                        </div>#}
-                                        <div class="form-group">
-                                            <button class="btn btn-primary btn-sm" type="submit">Save</button>
-                                        </div>
-                                    </form>
-                                </div>
+    <h3 class="text-dark mb-4" style="margin-top: 1.5rem;">Profile</h3>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="row mb-3">
+        <div class="col">
+            <div class="card shadow mb-3">
+                <div class="card-header py-3">
+                    <p class="text-primary m-0 font-weight-bold">User Settings</p>
+                </div>
+                <div class="card-body">
+                    <div>
+                        <div class="row text-center align-items-center">
+                            <div class="col text-left">
+                                <p style="margin: 0;"><strong>Name:</strong></p>
+                                <p>{{ user.get_full_name }}</p>
                             </div>
+                            <div class="col text-left">
+                                <p style="margin: 0;"><strong>Email:</strong></p>
+                                <p>{{ user.email }}</p>
+                            </div>
+                            <div class="col text-left">
+                                <p style="margin: 0;"><strong>Phone number:</strong></p>
+                                <p>{{ user.phone_number }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" id="update_user_info" type="button">Make Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card shadow">
+                <div class="card-header py-3">
+                    <p class="text-primary m-0 font-weight-bold">Cameras</p>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                        <table class="table dataTable my-0" id="dataTable">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>App</th>
+                                <th>Location</th>
+                                <th class="text-center">Update</th>
+                                <th class="text-center">Delete</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for camera in user_cameras %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ camera.app }}</td>
+                                    <td>{{ camera.location }}</td>
+                                    <td class="text-center">
+                                        <!-- Update camera button -->
+                                        <button type="button" id="update-camera" class="bs-modal btn btn-sm btn-primary"
+                                                data-form-url="{% url 'app:update_camera' camera.pk %}">
+                                            <span class="fa fa-pencil"></span>
+                                        </button>
+                                    </td>
+                                    <td class="text-center">
+                                        <!-- Delete camera buttons -->
+                                        <button type="button" id="delete-camera" class="bs-modal btn btn-sm btn-danger"
+                                                data-form-url="{% url 'app:delete_camera' camera.pk %}">
+                                            <span class="fa fa-trash"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 align-self-center">
+                            <button class="btn btn-primary" type="button" name="button" id="add_camera">Add camera</button>
+                        </div>
+                        <div class="col text-right">
+                            <button class="btn btn-success" type="button">Save</button>
                         </div>
                     </div>
                 </div>
             </div>
-            <footer class="bg-white sticky-footer">
-                <div class="container my-auto">
-                    <div class="text-center my-auto copyright"><span>Copyright © OJOS 2020</span></div>
-                </div>
-            </footer>
         </div>
     </div>
+{% endblock %}
+
+{% block extra_scripts %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $("#update_user_info").modalForm({
+                formURL: "{% url 'app:update_profile' user.pk %}"
+            });
+
+            $("#add_camera").modalForm({
+                formURL: "{% url 'app:add_camera' %}"
+            });
+
+            $(".bs-modal").each(function () {
+                $(this).modalForm({
+                    formURL: $(this).data('form-url')
+                });
+            });
+
+        });
+    </script>
 {% endblock %}

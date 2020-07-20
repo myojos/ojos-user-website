@@ -1,0 +1,30 @@
+{% load widget_tweaks %}
+
+<form method="post" action="">
+    {% csrf_token %}
+
+    <div class="modal-header">
+        <h4 class="modal-title text-primary">Update your information</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+
+    <div class="modal-body">
+        <div class="form-group"><label>First Name:</label>
+            {% render_field form.first_name class+="form-control" %}
+            {% if form.first_name.errors %}
+                <div class="isa_error {% if form.first_name.errors %} invalid {% endif %}">{{ form.first_name.errors }}</div>
+            {% endif %}
+        </div>
+        <div class="form-group"><label>Last Name:</label>
+            {% render_field form.last_name class+="form-control" %}
+            {% if form.last_name.errors %}
+                <div class="isa_error {% if form.last_name.errors %} invalid {% endif %}">{{ form.last_name.errors }}</div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-light" type="button" data-dismiss="modal">Close</button>
+        <button class="submit-btn btn btn-primary" type="button">Save</button>
+    </div>
+</form>
