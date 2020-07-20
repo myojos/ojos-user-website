@@ -64,7 +64,7 @@
                             <td>{{ event.timestamp }}</td>
                             <td class="text-center">
                                 {% if not event.is_old %}
-                                    <a href="{{ event.video_link }}"><i class="fas fa-film active"></i></a>
+                                    <a target="_blank" href="{{ event.video_link }}"><i class="fas fa-film active"></i></a>
                                 {% else %}
                                     <i class="fas fa-film"></i>
                                 {% endif %}
