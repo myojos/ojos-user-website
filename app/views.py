@@ -1,4 +1,5 @@
-from bootstrap_modal_forms.generic import BSModalCreateView, BSModalUpdateView, BSModalDeleteView
+from bootstrap_modal_forms.generic import BSModalCreateView, BSModalUpdateView, BSModalDeleteView, BSModalFormView
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
@@ -6,7 +7,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 
 from home.models import OjosUser
-from .forms import OjosUserUpdateForm, CameraCreateUpdateForm, EventReportForm
+from .forms import OjosUserUpdateForm, CameraCreateUpdateForm, EventReportForm, GenerateReportForm
 from .models import Event, Camera
 
 
@@ -77,4 +78,14 @@ class EventReportView(BSModalUpdateView):
 
     def form_valid(self, form):
         form.instance.is_reported = True
+        return super().form_valid(form)
+
+
+class GenerateReportView(BSModalFormView):
+    template_name = 'app/generate_report_form.html'
+    form_class = GenerateReportForm
+    success_url = reverse_lazy('app:events')
+
+    def form_valid(self, form):
+        messages.add_message(self.request, messages.SUCCESS, f"Generating form for {form.cleaned_data['day']}")
         return super().form_valid(form)

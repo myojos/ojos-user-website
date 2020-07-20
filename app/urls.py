@@ -12,4 +12,5 @@ urlpatterns = [
     path('update/<int:pk>', views.CameraUpdateView.as_view(), name='update_camera'),
     path('delete/<int:pk>', views.CameraDeleteView.as_view(), name='delete_camera'),
     path('report/<int:pk>', views.EventReportView.as_view(), name='report_event'),
+    path('generate/', views.GenerateReportView.as_view(), name='generate_report'),
 ]
