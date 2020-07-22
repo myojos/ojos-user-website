@@ -6,7 +6,7 @@ from django.core.validators import MaxValueValidator
 
 class Camera(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    creation_date = models.DateTimeField(default=timezone.now())
+    creation_date = models.DateTimeField(default=timezone.now)
 
     class App(models.TextChoices):
         XIAOMI = 'XIAOMI', 'Xiaomi'
