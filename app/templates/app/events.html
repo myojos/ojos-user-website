@@ -8,8 +8,8 @@
 {% block body_content %}
     <div class="d-sm-flex justify-content-between align-items-center mb-4" style="margin-top: 1.5rem;">
         <h3 class="text-dark mb-4" style="margin-top: 1.5rem;">Events History</h3>
-        <a class="btn btn-primary btn-sm d-none d-sm-inline-block text-white" role="button" id="generate_report">
-            <i class="fas fa-download fa-sm"></i> Generate Report</a>
+{#        <a class="btn btn-primary btn-sm d-none d-sm-inline-block text-white" role="button" id="generate_report">#}
+{#            <i class="fas fa-download fa-sm"></i> Generate Report</a>#}
     </div>
     {% if messages %}
         {% for message in messages %}
@@ -51,16 +51,28 @@
                         <th>Event</th>
                         <th>Where</th>
                         <th>When</th>
-                        <th class="text-center">Video</th>
-                        <th class="text-center">Download</th>
-                        <th class="text-center">Report Error</th>
+                        <th class="text-center">
+                            Video
+                            <i class="far fa-question-circle" style="font-size: 12px;" data-toggle="tooltip" data-placement="top"
+                               title="Videos are available for 14 days."></i>
+                        </th>
+                        <th class="text-center">
+                            Download
+                            <i class="far fa-question-circle" style="font-size: 12px;" data-toggle="tooltip" data-placement="top"
+                               title="Videos are available for 14 days."></i>
+                        </th>
+                        <th class="text-center">
+                            Report Error
+                            <i class="far fa-question-circle" style="font-size: 12px;" data-toggle="tooltip" data-placement="top"
+                               title="Report this event if it doesn't describe what happened in the video."></i>
+                        </th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for event in user_events %}
                         <tr {% if event.is_reported %}class="table-warning"{% endif %}>
                             <td>{{ event.event_type }}</td>
-                            <td>{{ event.location }}</td>
+                            <td>{{ event.camera.get_location }}</td>
                             <td>{{ event.timestamp }}</td>
                             <td class="text-center">
                                 {% if not event.is_old %}
@@ -79,7 +91,8 @@
                             <td class="text-center">
                                 {% if not event.is_old and not event.is_reported %}
                                     <button class="btn btn-danger report_event" id="report_event" type="button"
-                                            data-form-url="{% url 'app:report_event' event.pk %}">Report
+                                            data-form-url="{% url 'app:report_event' event.pk %}" style="padding: .15rem .6rem;">
+                                        Report
                                     </button>
                                 {% elif event.is_reported %}
                                     <i class="fas fa-exclamation-circle text-danger"
@@ -91,9 +104,9 @@
                     </tbody>
                     <tfoot>
                     <tr>
-                        <td>Event</td>
-                        <td>Where</td>
-                        <td>When</td>
+                        <th>Event</th>
+                        <th>Where</th>
+                        <th>When</th>
                         <th class="text-center">Video</th>
                         <th class="text-center">Download</th>
                         <th class="text-center">Report Error</th>
