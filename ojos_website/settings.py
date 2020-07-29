@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'widget_tweaks',
     'contact_form',
+    'anymail',
     'bootstrap_modal_forms',
     'home.apps.HomeConfig',
     'app.apps.AppConfig',
@@ -133,12 +134,11 @@ AUTH_USER_MODEL = 'home.OjosUser'
 LOGIN_REDIRECT_URL = '/app'
 LOGOUT_REDIRECT_URL = '/'
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-MAILER_EMAIL_BACKEND = EMAIL_BACKEND
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-DEFAULT_FROM_EMAIL = f"OJOS <{EMAIL_HOST_USER}>"
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
-EMAIL_PORT = 587
-PASSWORD_RESET_TIMEOUT_DAYS = 2
+ANYMAIL = {
+    "MAILGUN_API_KEY": os.getenv('MAILGUN_API_KEY'),
+    "MAILGUN_SENDER_DOMAIN": 'mg.myojos.tech',
+    "MAILGUN_API_URL": "https://api.eu.mailgun.net/v3"
+}
+EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
+DEFAULT_FROM_EMAIL = "OJOS <noreply@myojos.tech>"
+SERVER_EMAIL = DEFAULT_FROM_EMAIL
