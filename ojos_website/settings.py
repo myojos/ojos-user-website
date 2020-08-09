@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-
+import django_heroku
 from dotenv import load_dotenv
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -85,11 +85,12 @@ WSGI_APPLICATION = 'ojos_website.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'ojos',
+        'NAME': os.getenv('POSTGRES_DATABASE'),
         'USER': os.getenv('POSTGRES_USERNAME'),
         'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
-        'HOST': 'localhost',
+        'HOST': os.getenv('POSTGRES_HOST'),
         'PORT': '5432',
+        'CONN_MAX_AGE': 500
     }
 }
 
@@ -142,3 +143,6 @@ ANYMAIL = {
 EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
 DEFAULT_FROM_EMAIL = "OJOS <noreply@myojos.tech>"
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
+
+# Configure Django App for Heroku.
+django_heroku.settings(locals())

@@ -39,6 +39,7 @@ class Event(models.Model):
     timestamp = models.DateTimeField('Timestamp', validators=[MaxValueValidator(limit_value=timezone.now)])
     video_link = models.URLField()
     is_reported = models.BooleanField()
+    is_visible = models.BooleanField()
 
     class Meta:
         constraints = [
