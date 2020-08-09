@@ -66,7 +66,7 @@ class EventsView(LoginRequiredMixin, generic.ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return Event.objects.filter(camera__user=self.request.user).order_by('-timestamp')
+        return Event.objects.filter(camera__user=self.request.user, is_visible=True).order_by('-timestamp')
 
 
 class EventReportView(BSModalUpdateView):
