@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'contact_form',
     'anymail',
+    'rangefilter',
     'bootstrap_modal_forms',
     'home.apps.HomeConfig',
     'app.apps.AppConfig',
