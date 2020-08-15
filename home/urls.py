@@ -12,7 +12,7 @@ app_name = 'home'
 urlpatterns = [
     path('', views.index, name='index'),
     path('contact/', ContactFormView.as_view(
-        recipient_list=[settings.EMAIL_HOST_USER],
+        recipient_list=[settings.CONTACT_EMAIL],
         success_url=reverse_lazy('home:contact_form_sent')
     ), name='contact_form'),
     path('contact/sent/', TemplateView.as_view(template_name='contact_form/contact_form_sent.html'), name='contact_form_sent'),

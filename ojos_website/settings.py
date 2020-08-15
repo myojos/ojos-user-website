@@ -143,6 +143,7 @@ ANYMAIL = {
 }
 EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
 DEFAULT_FROM_EMAIL = "OJOS <noreply@myojos.tech>"
+CONTACT_EMAIL = 'contact@myojos.tech'
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
 # Configure Django App for Heroku.
