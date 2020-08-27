@@ -131,7 +131,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # Registration settings
-COUNTRIES_ONLY = ['IL', 'ES', 'US']
 AUTH_USER_MODEL = 'home.OjosUser'
 LOGIN_REDIRECT_URL = '/app'
 LOGOUT_REDIRECT_URL = '/'
