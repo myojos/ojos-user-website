@@ -28,6 +28,8 @@ def activate(request, uidb64, token):
         user = None
     if user is None:
         return HttpResponse('Activation link is invalid!')
+    elif user.is_active:
+        return HttpResponse('User is already active.')
     elif default_token_generator.check_token(user, token):
         user.is_active = True
         user.save()
